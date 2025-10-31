@@ -1,70 +1,91 @@
-﻿class Queue
+﻿using System;
+
+class Queue
 {
-    private int[] queue;   // Arreglo que contiene los elementos de la cola
-    private int capacity;      // Tamaño máximo de la cola
-    private int front;     // Índice del primer elemento
-    private int rear;      // Índice del último elemento
+    private int[] queue;     
+    private int capacity;   
+    private int front;      
+    private int rear;        
 
     public Queue(int capacity)
     {
         this.capacity = capacity;
         queue = new int[capacity];
-        front = 0;  // Comenzamos con el frente en 0
-        rear = -1;  // Rear en -1 porque aún no hay elementos
+        front = -1; 
+        rear = -1; 
     }
 
-    public bool isEmpty()
+   
+    public bool IsEmpty()
     {
-        return rear < front; // Si rear es menor que front, la cola está vacía
+        return front == -1; 
     }
 
-    public bool isFull()
+    
+    public bool IsFull()
     {
-        return rear == capacity - 1; // Si rear alcanza la capacidad máxima, la cola está llena
+        return rear == capacity - 1;
     }
-    // Agrega un elemento al final de la cola
+
+    
     public void Enqueue(int item)
     {
-        if (isFull())
+        if (IsFull())
         {
-            throw new Exception("La cola está llena, no se puede agregar el elemento.");
+            throw new Exception("La cola está llena.");
         }
-        rear++;             // Movemos el índice rear al siguiente lugar
-        queue[rear] = item; // Insertamos el elemento
+
+        // Si la cola está vacía, movemos front a 0
+        if (IsEmpty())
+        {
+            front = 0;
+        }
+
+        rear++;
+        queue[rear] = item;
+
+        Console.WriteLine($"Elemento {item} agregado.");
     }
 
-    // Quita un elemento del frente de la cola
+   
     public int Dequeue()
     {
-        if (isEmpty())
-        {
-            throw new Exception("La cola está vacía, no se puede eliminar ningún elemento.");
-        }
-        int frontItem = queue[front]; // Guardamos el primer elemento
-        front++;                       // Avanzamos el frente
-        return frontItem;
-    }
-
-    // Ve el primer elemento sin eliminarlo
-    public int Peek()
-    {
-        if (isEmpty())
+        if (IsEmpty())
         {
             throw new Exception("La cola está vacía.");
         }
-        return queue[front];
+
+        int removed = queue[front]; 
+
+        // Desplazamos todos los elementos una posición hacia adelante
+        for (int i = 0; i < rear; i++)
+        {
+            queue[i] = queue[i + 1];
+        }
+
+        rear--; // Disminuye el índice del último elemento
+
+        // Si la cola quedó vacía después de eliminar, reiniciamos los índices
+        if (rear < 0)
+        {
+            front = -1;
+            rear = -1;
+        }
+
+        Console.WriteLine($"Elemento {removed} eliminado y cola desplazada.");
+        return removed;
     }
 
-    // Muestra todos los elementos actuales de la cola
+    
     public void Show()
     {
-        if (isEmpty())
+        if (IsEmpty())
         {
-            throw new Exception("La cola está vacía.");
-
+            Console.WriteLine("La cola está vacía.");
+            return;
         }
 
-        Console.Write("Elementos en la cola: ");
+        Console.Write("Cola actual: ");
         for (int i = front; i <= rear; i++)
         {
             Console.Write(queue[i] + " ");
@@ -79,19 +100,19 @@ class Program
     {
         Queue myQueue = new Queue(5);
 
-
         myQueue.Enqueue(10);
         myQueue.Enqueue(20);
         myQueue.Enqueue(30);
         myQueue.Show();
 
-        Console.WriteLine("Elemento al frente que borraremos: " + myQueue.Peek());
-
         myQueue.Dequeue();
         myQueue.Show();
-        Console.WriteLine("Se agregaran dos elementos...");
+
+        myQueue.Dequeue();
+        myQueue.Dequeue();
+        myQueue.Show();
+
         myQueue.Enqueue(40);
-        myQueue.Enqueue(50);
         myQueue.Show();
     }
 }

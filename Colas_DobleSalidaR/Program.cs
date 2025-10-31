@@ -97,13 +97,13 @@
             return;
         }
 
-        int i = front;
+        int h = front;
         while (true)
         {
-            Console.Write(deque[i] + ", ");
-            if (i == rear) // Rompe el ciclo cuando llegue al rear
+            Console.Write(deque[h] + ", ");
+            if (h == rear) // Rompe el ciclo cuando llegue al rear
                 break;
-            i = (i + 1) % capacity; // Movemos i al siguiente índice de forma circular
+            h = (h + 1) % capacity; // Movemos i al siguiente índice de forma circular
         }
         Console.WriteLine();
     }

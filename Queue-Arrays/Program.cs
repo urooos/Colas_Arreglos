@@ -44,7 +44,6 @@ class Queue
         rear++;
         queue[rear] = item;
 
-        Console.WriteLine($"Elemento {item} agregado.");
     }
 
    
@@ -71,8 +70,6 @@ class Queue
             front = -1;
             rear = -1;
         }
-
-        Console.WriteLine($"Elemento {removed} eliminado y cola desplazada.");
         return removed;
     }
 
@@ -105,13 +102,16 @@ class Program
         myQueue.Enqueue(30);
         myQueue.Show();
 
+        Console.WriteLine("Eliminamos un elemento");
         myQueue.Dequeue();
         myQueue.Show();
 
+        Console.WriteLine("Eliminamos dos elementos");
         myQueue.Dequeue();
         myQueue.Dequeue();
         myQueue.Show();
 
+        Console.WriteLine("Agregamos un elemento");
         myQueue.Enqueue(40);
         myQueue.Show();
     }

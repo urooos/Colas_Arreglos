@@ -99,13 +99,13 @@
             return;
         }
 
-        int i = front;
+        int h = front;
         while (true)
         {
-            Console.Write(deque[i] + ", ");
-            if (i == rear)
+            Console.Write(deque[h] + ", ");
+            if (h == rear)
                 break;
-            i = (i + 1) % capacity;
+            h = (h + 1) % capacity;
         }
         Console.WriteLine();
     }
